@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+
+    <title>Search</title>
+</head>
+
+<body>
+<div class="container">
+    <h3>SEARCH MEMBER</h3>
+    <hr>
+    <p class="h4 mb-4">Search</p>
+    <form th:href="@{/members/search}" method="GET">
+        <input type="text" name="term" class="form-control mb-4 w-25" placeholder="Search Text" th:value="${searchTerm}">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+    <hr>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phonenumber</th>
+            <th>Time Remain(days)</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="tempMember:${searchResults}">
+            <td th:text="${tempMember.firstName}" />
+            <td th:text="${tempMember.lastName}" />
+            <td th:text="${tempMember.phonenumber}" />
+            <td th:text="${tempMember.remainingtime}" />
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <a th:href="@{/members/list}">MainPage</a>
+
+
+</div>
+<script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

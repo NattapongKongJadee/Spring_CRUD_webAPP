@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>MainPage</title>
+</head>
+
+<body>
+<style>
+   body {
+        background-image: url("background.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+  .promo-banner {
+    background-color: white;
+    padding: 30px;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    color: black;
+    width: 600px;
+    height: 300px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .register-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    text-decoration: none;
+    color: white;
+    background-color: blue;
+    border-radius: 5px;
+  }
+
+.promo-banner {
+	background-color: white;
+	padding: 30px;
+	text-align: center;
+	color: black;
+}
+
+.logo {
+	display: block;
+	margin: 30px auto 0;
+	width: 200px;
+}
+
+.promo-text {
+	font-size: 50px;
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+.register-btn {
+	display: inline-block;
+	margin-top: 20px;
+	padding: 10px 20px;
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+	color: white;
+	background-color: blue;
+	border-radius: 5px;
+}
+
+
+</style>
+<img src="mark.png" alt="Logo" class="logo">
+<div class="promo-banner">
+	PROMOTION !! 3 MONTHS FREE + 1 MONTH
+	<br>
+	<a th:href="@{/members/showform}" class="register-btn">REGISTER NOW!!</a>
+</div>
+
+
+
+</style>
+
+	<style>
+        body {
+            margin: 0;
+            padding-top: 50px;
+        }
+
+        ul {
+             list-style-type: none;
+        	margin: 0;
+        	padding: 0;
+        	overflow-x: auto;
+        	background-color: #333;
+        	position: fixed;
+        	top: 0;
+        	width: 100%;
+        	display: flex;
+        	justify-content: flex-end;
+
+        }
+
+        li {
+            display: inline-block;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 25px 10px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #111;
+        }
+
+        .active {
+            background-color: nayon;
+        }
+    </style>
+	</head>
+		<ul>
+		<li><a th:href="@{/members/list}">LIST</a></li>
+		<li><a th:href="@{/members/search}">SEARCH</a></li>
+		<li><a th:href="@{/aboutus}">ABOUT US</a></li>
+	</ul>
+
+</body>
+
+</html>
+
+
+
+
+
+

@@ -1,0 +1,146 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=yes">
+	<link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+	<style>
+        body {
+            margin: 0;
+            padding-top: 40px;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow-x: auto;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            white-space: nowrap;
+        }
+
+        li {
+            display: inline-block;
+        }
+
+        li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 10px;
+            text-decoration: none;
+        }
+
+        li a:hover:not(.active) {
+            background-color: #111;
+        }
+
+        .active {
+            background-color: blue;
+        }
+    </style>
+
+	<title>LIST MEMBER</title>
+	</head>
+
+	<body>
+	<div class="container">
+	<hr>
+	<h3>KINGKONG FITNESS MEMBER SYSTEM</h3>
+	<hr>
+
+	<ul>
+		<li><a th:href="@{/main}">HOME</a></li>
+		<li><a th:href="@{/members/search}">SEARCH</a></li>
+		<li><a th:href="@{/aboutus}">ABOUT US</a></li>
+	</ul>
+
+
+	<table class="table table-bordered table-striped">
+		<thead class="table-dark">
+		<tr>
+			<th>FIRST NAME</th>
+			<th>LAST NAME</th>
+			<th>PHONE-NUMBER</th>
+			<th>REMAIN TIME</th>
+			<th>ACTION</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tr th:each="tempMember : ${members}">
+			<td th:text="${tempMember.firstName}"></td>
+			<td th:text="${tempMember.lastName}"></td>
+			<td th:text="${tempMember.phonenumber}"></td>
+			<td>
+		<span class="remaining-time"
+			  th:text="${tempMember.remainingtime}"></span>
+			</td>
+			<td>
+				<a th:href="@{/members/showformForUpdate(memberId=${tempMember.id})}"
+				   class="btn btn-info btn-sm">Update</a>
+
+				<a th:href="@{/members/delete(memberId=${tempMember.id})}"
+				   class="btn btn-danger btn-sm"
+				   onclick="if(!confirm('Are you sure to delete?')) return false;">Delete</a>
+			</td>
+		</tr>
+
+		<script>
+  const remainingTimeElements = document.getElementsByClassName('remaining-time');
+  Array.from(remainingTimeElements).forEach(function(element) {
+    let remainingDays = parseInt(element.textContent);
+    let remainingTime = remainingDays * 24 * 60 * 60;
+
+    // Check if remaining time exists in URL query parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('remainingTime')) {
+      const storedRemainingTime = parseInt(urlParams.get('remainingTime'));
+      if (storedRemainingTime > remainingTime) {
+        remainingTime = storedRemainingTime;
+      }
+    }
+
+    function updateRemainingTime() {
+      const days = Math.floor(remainingTime / (24 * 60 * 60));
+      const hours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60));
+      const minutes = Math.floor((remainingTime % (60 * 60)) / 60);
+      const seconds = Math.floor(remainingTime % 60);
+
+      const formattedTime = `${days} days ${hours.toString().padStart(2, '0')}h ${minutes
+        .toString()
+        .padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
+      element.textContent = formattedTime;
+
+      if (remainingTime <= 0) {
+        clearInterval(timer);
+      }
+
+      remainingTime--;
+    }
+
+    const timer = setInterval(updateRemainingTime, 1000);
+
+    // Update URL with remaining time as query parameter when navigating to another page
+    window.addEventListener('beforeunload', function() {
+      const url = new URL(window.location.href);
+      url.searchParams.set('remainingTime', remainingTime);
+      window.location.href = url.href;
+    });
+  });
+</script>
+
+		</tbody>
+	</table>
+
+	<a th:href="@{/members/showform}" class="btn btn-primary btn-sm mb-3">
+		NEW MEMBER
+	</a>
+	</div>
+	<script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+	</body>
+	</html>

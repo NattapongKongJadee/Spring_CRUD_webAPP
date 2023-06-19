@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/webjars/bootstrap/5.3.0/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .clock {
+            font-size: 48px;
+            text-align: center;
+        }
+
+        .about {
+            background-color: #f2f2f2;
+            padding: 20px;
+            margin: 20px;
+            font-size: 18px;
+            text-align: center;
+        }
+    </style>
+    <style>
+        body {
+            background-image: url("background.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+    <title>ABOUT US</title>
+</head>
+<body>
+<div class="clock" id="clock"></div>
+
+<div class="about">
+    <h2>About Us</h2>
+    <p>
+        <strong>Location:</strong> 123 Example Street, City, Country<br>
+        <strong>Contact:</strong> Phone: 123-456-7890 | Email: info@example.com<br>
+        <strong>Background:</strong>"Our fitness page is dedicated to creating a community where every person can come together to achieve their goals. We believe in the power of fitness to transform lives and strive to provide guidance, support, and motivation to all individuals on their fitness journey. Whether you're a beginner or an experienced fitness enthusiast, our aim is to push you towards success and help you reach your fullest potential. Join us as we embark on this shared adventure, supporting and inspiring one another along the way. Together, we can conquer any challenge and make our fitness goals a reality!"
+    </p>
+    <hr>
+    <a th:href="@{/members/list}">MainPage</a>
+</div>
+
+<script>
+    function updateClock() {
+        var now = new Date();
+        var hours = now.getHours();
+        var minutes = now.getMinutes();
+        var seconds = now.getSeconds();
+
+        // Format the time with leading zeros
+        hours = addLeadingZero(hours);
+        minutes = addLeadingZero(minutes);
+        seconds = addLeadingZero(seconds);
+
+        // Display the time in the clock element
+        document.getElementById("clock").innerHTML = hours + ":" + minutes + ":" + seconds;
+
+        // Update the clock every second
+        setTimeout(updateClock, 1000);
+    }
+
+    // Helper function to add leading zeros
+    function addLeadingZero(number) {
+        return (number < 10) ? "0" + number : number;
+    }
+
+    // Start the clock
+    updateClock();
+
+</script>
+</body>
+</html>

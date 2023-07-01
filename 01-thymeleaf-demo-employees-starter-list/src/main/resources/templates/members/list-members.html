@@ -1,5 +1,7 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:java="java">
+...
+
 
 <head>
 
@@ -67,7 +69,9 @@
 			<th>FIRST NAME</th>
 			<th>LAST NAME</th>
 			<th>PHONE-NUMBER</th>
-			<th>REMAIN TIME</th>
+			<th>REGISTER-DATE</th>
+			<th>EXPIRE DATE</th>
+			<th>REMAINING DAYS</th>
 			<th>ACTION</th>
 		</tr>
 		</thead>
@@ -76,64 +80,24 @@
 			<td th:text="${tempMember.firstName}"></td>
 			<td th:text="${tempMember.lastName}"></td>
 			<td th:text="${tempMember.phonenumber}"></td>
-			<td>
-		<span class="remaining-time"
-			  th:text="${tempMember.remainingtime}"></span>
-			</td>
+			<td th:text="${tempMember.date}"></td>
+			<td th:text="${tempMember.expirationDate}"></td>
+			<td th:text="${tempMember.remainingtime}"></td>
+
+
 			<td>
 				<a th:href="@{/members/showformForUpdate(memberId=${tempMember.id})}"
 				   class="btn btn-info btn-sm">Update</a>
 
+				<a th:href="@{/members/showformForUpdate(memberId=${tempMember.id})}"
+				   class="btn btn-success btn-sm">Extend</a>
+
 				<a th:href="@{/members/delete(memberId=${tempMember.id})}"
 				   class="btn btn-danger btn-sm"
 				   onclick="if(!confirm('Are you sure to delete?')) return false;">Delete</a>
+
 			</td>
 		</tr>
-
-		<script>
-  const remainingTimeElements = document.getElementsByClassName('remaining-time');
-  Array.from(remainingTimeElements).forEach(function(element) {
-    let remainingDays = parseInt(element.textContent);
-    let remainingTime = remainingDays * 24 * 60 * 60;
-
-    // Check if remaining time exists in URL query parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('remainingTime')) {
-      const storedRemainingTime = parseInt(urlParams.get('remainingTime'));
-      if (storedRemainingTime > remainingTime) {
-        remainingTime = storedRemainingTime;
-      }
-    }
-
-    function updateRemainingTime() {
-      const days = Math.floor(remainingTime / (24 * 60 * 60));
-      const hours = Math.floor((remainingTime % (24 * 60 * 60)) / (60 * 60));
-      const minutes = Math.floor((remainingTime % (60 * 60)) / 60);
-      const seconds = Math.floor(remainingTime % 60);
-
-      const formattedTime = `${days} days ${hours.toString().padStart(2, '0')}h ${minutes
-        .toString()
-        .padStart(2, '0')}m ${seconds.toString().padStart(2, '0')}s`;
-      element.textContent = formattedTime;
-
-      if (remainingTime <= 0) {
-        clearInterval(timer);
-      }
-
-      remainingTime--;
-    }
-
-    const timer = setInterval(updateRemainingTime, 1000);
-
-    // Update URL with remaining time as query parameter when navigating to another page
-    window.addEventListener('beforeunload', function() {
-      const url = new URL(window.location.href);
-      url.searchParams.set('remainingTime', remainingTime);
-      window.location.href = url.href;
-    });
-  });
-</script>
-
 		</tbody>
 	</table>
 

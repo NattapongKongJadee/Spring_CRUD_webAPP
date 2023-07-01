@@ -6,7 +6,9 @@ import com.luv2code.springboot.thymeleafdemo.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import java.time.temporal.ChronoUnit;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -41,12 +43,21 @@ public class MemberController {
 
 
 	@PostMapping("/save")
-	public String saveEmployee(@ModelAttribute("member") Member theMember) {
-		int remainingTimeInDays = theMember.getRemainingtime();
-		theMember.setRemainingtime(remainingTimeInDays);
+	public String saveEmployee(@ModelAttribute("member") Member theMember,
+							   @RequestParam("date") LocalDate date,
+							   @RequestParam("remainingtime") int remainingtime) {
+
+		theMember.setDate(date);
+		LocalDate expirationDate = date.plusMonths(remainingtime);
+		theMember.setExpirationDate(expirationDate);
+
+		long remainingDays = ChronoUnit.DAYS.between(date, expirationDate);
+		theMember.setRemainingtime((int) remainingDays);
+
 		memberService.save(theMember);
 		return "redirect:/members/list";
 	}
+
 
 
 	@GetMapping("/showformForUpdate")

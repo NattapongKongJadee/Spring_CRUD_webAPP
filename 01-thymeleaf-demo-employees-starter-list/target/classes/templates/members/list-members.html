@@ -95,9 +95,6 @@
 				<a th:href="@{/members/showformForUpdate(memberId=${tempMember.id})}"
 				   class="btn btn-info btn-sm">Update</a>
 
-				<a th:href="@{/members/showformForUpdate(memberId=${tempMember.id})}"
-				   class="btn btn-success btn-sm">Extend</a>
-
 				<a th:href="@{/members/delete(memberId=${tempMember.id})}"
 				   class="btn btn-danger btn-sm"
 				   onclick="if(!confirm('Are you sure to delete?')) return false;">Delete</a>
